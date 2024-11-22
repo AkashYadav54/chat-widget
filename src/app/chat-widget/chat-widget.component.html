@@ -1,0 +1,57 @@
+<!-- Draggable Container -->
+<div
+  class="draggable-container"
+  [ngClass]="{ 'chat-widget-open': isOpen }"
+  draggable="true"
+  (dragstart)="onDragStart($event)"
+  (drag)="onDrag($event)"
+  (dragend)="onDragEnd($event)"
+  [style.top.px]="position.y"
+  [style.left.px]="position.x"
+>
+  <!-- Chat Icon -->
+  <div *ngIf="!isOpen" class="chat-icon" (click)="toggleChat()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#f2eeee" viewBox="0 0 256 256">
+      <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216,77.4,203.53a7.85,7.85,0,0,1,2.53-.42,8,8,0,0,1,4,1.08A88,88,0,0,0,216,128Z"></path>
+    </svg>
+  </div>
+
+  <!-- Chat Widget -->
+  <div *ngIf="isOpen" class="chat-widget">
+    <!-- Header -->
+    <div class="header d-flex align-items-center">
+      <img src="user-profile.jpg" alt="User" class="profile-pic" />
+      <div class="header-content">
+        <h5>Chat with Support</h5>
+        <p class="status">We are online!</p>
+      </div>
+      <svg (click)="toggleChat()" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#f2eeee" viewBox="0 0 256 256">
+        <path d="M165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path>
+      </svg>
+    </div>
+
+    <!-- Messages -->
+    <div class="messages">
+      <div
+        *ngFor="let message of messages"
+        [ngClass]="{ 'my-message': message.sender === 'Me', 'other-message': message.sender !== 'Me' }"
+        class="message-container"
+      >
+        <div class="message-content">
+          <strong *ngIf="message.sender !== 'Me'" class="sender">{{ message.sender }}</strong>
+          {{ message.content }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <input [(ngModel)]="messageInput" type="text" placeholder="Enter your message..." />
+      <button (click)="sendMessage()" class="send-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#f2eeee" viewBox="0 0 256 256">
+          <path d="M231.87,114l-168-95.89A16,16,0,0,0,40.92,37.34L71.55,128,40.92,218.67A16,16,0,0,0,56,240a16.15,16.15,0,0,0,7.93-2.1l167.92-96.05a16,16,0,0,0,.05-27.89ZM56,224a.56.56,0,0,0,0-.12L85.74,136H144a8,8,0,0,0,0-16H85.74L56.06,32.16A.46.46,0,0,0,56,32l168,95.83Z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
