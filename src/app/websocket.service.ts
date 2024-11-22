@@ -17,9 +17,9 @@ export class WebsocketService {
     this.socket$ = webSocket(url);
 
     this.socket$.subscribe(
-      (message) => this.messages.next(message), // Emit incoming messages
-      (err) => console.error(err),              // Handle errors
-      () => console.warn('Completed!')           // Handle completion
+      (message) => this.messages.next(message),
+      (err) => console.error(err),
+      () => console.warn('Completed!')
     );
   }
 
