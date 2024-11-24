@@ -10,6 +10,9 @@
     cursor: default; // Normal pointer when the chat is open
   }
 
+  .draggable-container:active {
+    cursor: grabbing;  // Change to 'grabbing' when the container is being dragged
+  }
 .chat-icon {
   position: fixed;
   bottom: 20px;
@@ -37,9 +40,9 @@
 .chat-widget {
   position: fixed;
   bottom: 80px;
-  right: 20px;
-  width: 350px;
-  min-height: 500px;
+  right: 40px;
+  width: 380px;
+  min-height: 540px;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -145,6 +148,7 @@
       border-radius: 50%;
       color: #ffffff;
       padding: 10px;
+      margin-right: 10px;
       margin-left: 10px;
       cursor: pointer;
 
@@ -154,4 +158,21 @@
     }
   }
 }
+}
+.toggle-button {
+  position: fixed;
+  bottom: 200px;
+  right: 52px;
+}
+
+.fab-container {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  bottom: 260px; /* Adjust based on your design */
+  right: 52px;
+}
+
+.fab-container button {
+  margin-bottom: 10px; /* Space between FABs */
 }

@@ -20,6 +20,7 @@ export class ChatWidgetComponent {
   private messagesSubscription!: Subscription;
   position = { x: 50, y: 50 };
   dragging: boolean = false;
+  showFabButtons = false;
 
 
   constructor(private websocketService: WebsocketService) {}
@@ -34,27 +35,20 @@ export class ChatWidgetComponent {
   toggleChat(): void {
     this.isOpen = !this.isOpen;
   }
-  onDragStart(event: DragEvent): void {
-    if (event.dataTransfer) {
-      event.dataTransfer.setData('text/plain', '');
-    }
-    this.dragging = true;
+  toggleFab() {
+    this.showFabButtons = !this.showFabButtons;
+  }
+  mute() {
+    console.log('Mute button clicked');
+  }
+  askQuestion() {
+    console.log('Question button clicked');
   }
 
-
-  onDrag(event: DragEvent): void {
-    if (this.dragging && event.clientX > 0 && event.clientY > 0) {
-      this.position.x = event.clientX;
-      this.position.y = event.clientY;
-    }
+  showNotifications() {
+    console.log('Notification button clicked');
   }
 
-
-  onDragEnd(event: DragEvent):  void {
-    console.log('Drag ended', event);
-
-    this.dragging = false;
-  }
   sendMessage(): void {
     if (this.messageInput.trim()) {
       this.websocketService.send(this.messageInput);
