@@ -31,7 +31,7 @@ export class WebsocketService {
 
   public disconnect(): void {
     if (this.socket$) {
-      this.socket$.complete(); // Close the connection
+      this.socket$.complete();
     }
   }
 }

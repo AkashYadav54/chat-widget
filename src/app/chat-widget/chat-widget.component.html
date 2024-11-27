@@ -1,68 +1,94 @@
-<!-- Draggable Container -->
-<div
-  class="draggable-container"
-  [ngClass]="{ 'chat-widget-open': isOpen }"
-  #messagesContainer
-  draggable="true"
->
+<div class="draggable-container" cdkDrag [ngClass]="{ 'chat-widget-open': isOpen }" cdkDragBoundary=".chat-widget-boundary" cdkDragHandle=".chat-icon">
   <!-- Chat Icon -->
-  <div *ngIf="!isOpen" class="chat-icon" (click)="toggleChat()">
-    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#f2eeee" viewBox="0 0 256 256">
-      <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM84,116a12,12,0,1,0,12,12A12,12,0,0,0,84,116Zm88,0a12,12,0,1,0,12,12A12,12,0,0,0,172,116Zm60,12A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-16,0A88,88,0,1,0,51.81,172.06a8,8,0,0,1,.66,6.54L40,216L77.4,203.53a7.85,
-      7.85,a=2.53-.42,a=8,a=4,a=1.08,A88,A88,A=216,A128Z"></path>
+  <div *ngIf="!isOpen" class="chat-icon" (click)="toggleChat()" (mouseenter)="showFabButtons = true" (mouseleave)="showFabButtons = false">
+    <svg width="101" height="101" viewBox="0 0 101 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50.5" cy="50.5" r="50.5" fill="white" />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M35.1257 35.0832V63.8321H63.7889V35.0832H35.1257ZM33.5205 20.7944C26.4919 20.7944 20.7941 26.4752 20.7941 33.4828V65.4325C20.7941 72.4401 26.4919 78.1209 33.5205 78.1209H65.394C72.4227 78.1209 78.1205 72.4401 78.1205 65.4325V33.4828C78.1205 26.4752 72.4227 20.7944 65.394 20.7944H33.5205Z"
+        fill="url(#paint0_linear_5279_14702)"
+      />
+      <path
+        d="M35.0381 20.801L35.3237 63.5836H78.1167C78.2754 74.2315 73.4993 77.7827 65.5804 78.0071H38.1621C26.0978 78.8982 20.2413 74.6188 20.8351 62.9846L20.8637 35.1474C20.6808 26.1381 25.1467 20.5766 35.0381 20.801Z"
+        fill="url(#paint1_linear_5279_14702)"
+      />
+      <defs>
+        <linearGradient id="paint0_linear_5279_14702" x1="71.6426" y1="22.6002" x2="26.8707" y2="78.1209" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#AD00FF" />
+          <stop offset="1" stop-color="#07014B" />
+        </linearGradient>
+        <linearGradient id="paint1_linear_5279_14702" x1="41.4241" y1="64.8385" x2="41.6807" y2="89.9573" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#171717" />
+          <stop offset="1" />
+        </linearGradient>
+      </defs>
     </svg>
+
+    <!-- Floating Action Buttons -->
+    <div class="fab-buttons" *ngIf="showFabButtons">
+      <button mat-mini-fab color="primary">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-mini-fab color="accent">
+        <mat-icon>share</mat-icon>
+      </button>
+      <button mat-mini-fab color="warn">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
   </div>
 
   <!-- Chat Widget -->
   <div *ngIf="isOpen" class="chat-widget">
     <!-- Header -->
-    <div class="header d-flex align-items-center">
-      <img src="user-profile.jpg" alt="User" class="profile-pic" />
+    <div class="header">
+      <svg class="profile-pic" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#f6efef" viewBox="0 0 256 256">
+        <path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM79.57,196.57a60,60,0,0,1,96.86,0,83.72,83.72,0,0,1-96.86,0ZM100,120a28,28,0,1,1,28,28A28,28,0,0,1,100,120ZM194,179.94a83.48,83.48,0,0,0-29-23.42,52,52,0,1,0-74,0,83.48,83.48,0,0,0-29,23.42,84,84,0,1,1,131.9,0Z"></path>
+      </svg>
       <div class="header-content">
         <h5>Chat with Support</h5>
         <p class="status">We are online!</p>
+
+        <!-- Start and Stop Buttons -->
+        <div class="connection-buttons">
+          <button (click)="startConnection()" [disabled]="isConnected"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#d70909" viewBox="0 0 256 256"><path d="M176,128a12,12,0,0,1-5.17,9.87l-52,36A12,12,0,0,1,100,164V92a12,12,0,0,1,18.83-9.87l52,36A12,12,0,0,1,176,128Zm60,0A108,108,0,1,1,128,20,108.12,108.12,0,0,1,236,128Zm-24,0a84,84,0,1,0-84,84A84.09,84.09,0,0,0,212,128Z"></path></svg></button>
+          <button (click)="stopConnection()" [disabled]="!isConnected"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#d70909" viewBox="0 0 256 256"><path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20Zm0,192a84,84,0,1,1,84-84A84.09,84.09,0,0,1,128,212Zm40-112v56a12,12,0,0,1-12,12H100a12,12,0,0,1-12-12V100a12,12,0,0,1,12-12h56A12,12,0,0,1,168,100Z"></path></svg></button>
+        </div>
       </div>
-      <svg (click)="toggleChat()" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#f2eeee" viewBox="0 0 256 256">
-        <path d="M165.66,..."></path>
+
+      <svg class="close" (click)="toggleChat()" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#f6efef" viewBox="0 0 256 256">
+        <path d="M168.49,104.49,145,128l23.52,23.51a12,12,0,0,1-17,17L128,145l-23.51,23.52a12,12,0,0,1-17-17L111,128,87.51,104.49a12,12,0,0,1,17-17L128,111l23.51-23.52a12,12,0,0,1,17,17ZM236,128A108,108,0,1,1,128,20,108.12,108.12,0,0,1,236,128Zm-24,0a84,84,0,1,0-84,84A84.09,84.09,0,0,0,212,128Z"></path>
       </svg>
     </div>
 
-    <!-- Messages -->
+    <!-- Messages (scrollable container) -->
     <div class="messages" #messagesContainer>
-      <div
-        *ngFor="let message of messages"
-        [ngClass]="{ 'my-message': message.sender === 'Me', 'other-message': message.sender !== 'Me' }"
-        class="message-container"
-      >
+      <div *ngFor="let message of messages" [ngClass]="{ 'my-message': message.sender === 'Me', 'other-message': message.sender !== 'Me' }" class="message-container">
         <div class="message-content">
           <strong *ngIf="message.sender !== 'Me'" class="sender">{{ message.sender }}</strong>
           {{ message.content }}
+          <div class="timestamp" *ngIf="message.timestamp">
+            <small>{{ message.timestamp | date: 'short' }}</small>
+          </div>
         </div>
       </div>
     </div>
 
+    <!-- Footer -->
     <div class="footer">
       <input [(ngModel)]="messageInput" type="text" placeholder="Enter your message..." />
-      <!-- Toggle Button -->
-      <button mat-fab (click)="toggleFab()" class="toggle-button">
+
+      <!-- Toggle FAB Button -->
+      <!-- <button mat-fab (click)="toggleFab()" class="toggle-button">
         <mat-icon>{{ showFabButtons ? 'close' : 'add' }}</mat-icon>
-      </button>
+      </button> -->
 
-      <!-- Floating Action Buttons -->
-      <div class="fab-container" *ngIf="showFabButtons">
-        <button mat-fab color="primary" (click)="mute()">
-          <mat-icon>volume_off</mat-icon>
-        </button>
-        <button mat-fab color="accent" (click)="askQuestion()">
-          <mat-icon>question_answer</mat-icon>
-        </button>
-        <button mat-fab color="warn" (click)="showNotifications()">
-          <mat-icon>notifications</mat-icon>
-        </button>
-      </div>
-
+      <!-- Send Message Button -->
       <button (click)="sendMessage()" class="send-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#f3eded" viewBox="0 0 256 256"><path d="M231.87,114l-168-95.89A16,16,0,0,0,40.92,37.34L71.55,128,40.92,218.67A16,16,0,0,0,56,240a16.15,16.15,0,0,0,7.93-2.1l167.92-96.05a16,16,0,0,0,.05-27.89ZM56,224a.56.56,0,0,0,0-.12L85.74,136H144a8,8,0,0,0,0-16H85.74L56.06,32.16A.46.46,0,0,0,56,32l168,95.83Z"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="#f3eded" viewBox="0 0 256 256">
+          <path d="M231.87,114l-168-95.89A16,16,0,0,0,40.92,37.34L71.55,128,40.92,218.67A16,16,0,0,0,56,240a16.15,16.15,0,0,0,7.93-2.1l167.92-96.05a16,16,0,0,0,.05-27.89ZM56,224a.56.56,0,0,0,0-.12L85.74,136H144a8,8,0,0,0,0-16H85.74L56.06,32.16A.46.46,0,0,0,56,32l168,95.83Z"></path>
+        </svg>
       </button>
     </div>
   </div>

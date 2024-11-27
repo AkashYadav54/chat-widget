@@ -8,6 +8,7 @@ import { ChatWidgetComponent } from './chat-widget/chat-widget.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { CdkDrag, DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -18,9 +19,11 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     BrowserModule,
     CommonModule,
     FormsModule,
+    DragDropModule,
     AppRoutingModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    CdkDrag
   ],
   providers: [
     provideAnimationsAsync()

@@ -18,19 +18,53 @@ export class ChatWidgetComponent {
   messageInput: string = '';
   messages: ChatMessage[] = [];
   private messagesSubscription!: Subscription;
-  position = { x: 50, y: 50 };
-  dragging: boolean = false;
+  // private isDragging = false;
+  // private offsetX: number = 0;
+  // private offsetY: number = 0;
   showFabButtons = false;
-
+  isConnected: boolean = false;
 
   constructor(private websocketService: WebsocketService) {}
 
   ngOnInit(): void {
-    this.websocketService.connect('ws://localhost:8080');
-    this.messagesSubscription = this.websocketService.messages.subscribe((message) => {
-      this.messages.push({ sender: 'Server', content: message });
-    });
+
   }
+  startConnection(): void {
+    if (!this.isConnected) {
+      this.websocketService.connect('ws://localhost:8080');
+      this.isConnected = true;
+
+      this.messagesSubscription = this.websocketService.messages.subscribe(
+        (message: any) => {
+          try {
+            const parsedMessage =
+              typeof message === 'string' ? JSON.parse(message) : message;
+            this.messages.push({
+              sender: parsedMessage.sender,
+              content: parsedMessage.content,
+              timestamp: parsedMessage.timestamp
+                ? new Date(parsedMessage.timestamp)
+                : new Date(),
+            });
+          } catch (error) {
+            console.error('Failed to parse message:', error, message);
+          }
+        }
+      );
+    }
+  }
+
+  stopConnection(): void {
+    if (this.isConnected) {
+      this.websocketService.disconnect();
+      this.isConnected = false;
+
+      if (this.messagesSubscription) {
+        this.messagesSubscription.unsubscribe();
+      }
+    }
+  }
+
 
   toggleChat(): void {
     this.isOpen = !this.isOpen;
@@ -58,7 +92,11 @@ export class ChatWidgetComponent {
   }
 
   ngOnDestroy(): void {
-    this.messagesSubscription.unsubscribe();
+    if (this.messagesSubscription) {
+      this.messagesSubscription.unsubscribe();
+    }
     this.websocketService.disconnect();
   }
+
+
 }
