@@ -121,8 +121,6 @@ export class ChatWidgetComponent {
   toggleNotifications() {
     // Toggle the visibility of notifications
     this.showAll = !this.showAll;
-
-    // Update the displayed notifications based on 'showAll' state
     this.displayedNotifications = this.showAll
       ? this.notificationData.sops
       : this.notificationData.sops.slice(0, 3);
@@ -171,6 +169,13 @@ export class ChatWidgetComponent {
       this.messageInput = '';
     }
   }
+  showTab = false;
+
+  toggleTab() {
+    console.log("Show Tab")
+    this.showTab = !this.showTab;
+  }
+
 
   markAsRead(message: ChatMessage): void {
     if (!message.read) {
