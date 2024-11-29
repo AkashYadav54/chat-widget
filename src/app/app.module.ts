@@ -9,21 +9,30 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { CdkDrag, DragDropModule } from '@angular/cdk/drag-drop';
+import { SopsComponent } from './sops/sops.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ChatWidgetComponent
+    ChatWidgetComponent,
+    SopsComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     CommonModule,
     FormsModule,
     DragDropModule,
     AppRoutingModule,
     MatButtonModule,
     MatIconModule,
-    CdkDrag
+    CdkDrag,
+    MatDialogModule,
+    MatTabsModule,
+
   ],
   providers: [
     provideAnimationsAsync()
