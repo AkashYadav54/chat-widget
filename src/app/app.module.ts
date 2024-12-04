@@ -13,12 +13,14 @@ import { SopsComponent } from './sops/sops.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ContentComponent } from './content/content.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ChatWidgetComponent,
     SopsComponent,
+    ContentComponent,
   ],
   imports: [
     BrowserModule,

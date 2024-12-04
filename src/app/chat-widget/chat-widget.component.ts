@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { WebsocketService } from '../websocket.service';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -15,7 +15,8 @@ export interface ChatMessage {
   selector: 'app-chat-widget',
   standalone: false,
   templateUrl: './chat-widget.component.html',
-  styleUrl: './chat-widget.component.scss'
+  styleUrl: './chat-widget.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class ChatWidgetComponent {
   @ViewChild('transcriptModal') transcriptModal!: TemplateRef<any>;
@@ -30,7 +31,7 @@ export class ChatWidgetComponent {
   showFabButtons = false;
   isConnected: boolean = false;
   showNotifications: boolean = false;
-  constructor(private websocketService: WebsocketService,private dialog: MatDialog) {}
+  constructor(private websocketService: WebsocketService,private dialog: MatDialog,private elementRef: ElementRef) {}
   selectedTabIndex: number = 0;
   unreadAlertCount: number = 0;
   dialogRef!: MatDialogRef<any>;
@@ -190,4 +191,58 @@ export class ChatWidgetComponent {
     }
     this.websocketService.disconnect();
   }
+
+
+
+  public isDragging = false;
+  private offsetX = 0;
+  private offsetY = 0;
+  private currentElement: HTMLElement | null = null;
+
+  @HostListener('mousedown', ['$event'])
+  onMouseDown(event: MouseEvent): void {
+    // Determine if the event target is draggable
+    const targetElement = (event.target as HTMLElement).closest('.chat-widget, .chat-icon');
+    if (targetElement) {
+      this.isDragging = true;
+      this.currentElement = targetElement as HTMLElement;
+
+      const rect = targetElement.getBoundingClientRect();
+      this.offsetX = event.clientX - rect.left;
+      this.offsetY = event.clientY - rect.top;
+
+      (this.currentElement as HTMLElement).style.cursor = 'grabbing';
+    }
+  }
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(event: MouseEvent): void {
+    if (this.isDragging && this.currentElement) {
+      const windowWidth = window.innerWidth;
+      const windowHeight = window.innerHeight;
+
+      let newLeft = event.clientX - this.offsetX;
+      let newTop = event.clientY - this.offsetY;
+
+      const elementWidth = this.currentElement.offsetWidth;
+      const elementHeight = this.currentElement.offsetHeight;
+
+
+      newLeft = Math.max(0, Math.min(newLeft, windowWidth - elementWidth));
+      newTop = Math.max(0, Math.min(newTop, windowHeight - elementHeight));
+
+      this.currentElement.style.left = `${newLeft}px`;
+      this.currentElement.style.top = `${newTop}px`;
+    }
+  }
+
+  @HostListener('document:mouseup')
+  onMouseUp(): void {
+    if (this.currentElement) {
+      this.isDragging = false;
+      this.currentElement.style.cursor = 'grab';
+      this.currentElement = null;
+    }
+  }
+
 }

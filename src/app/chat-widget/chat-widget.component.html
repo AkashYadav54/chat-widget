@@ -1,119 +1,181 @@
-<div class="chat-widget-boundary">
-<div class="draggable-container" cdkDrag [ngClass]="{ 'chat-widget-open': isOpen }"  cdkDragBoundary=".chat-widget-boundary"
-cdkDragHandle=".chat-icon">
+<!-- Chat Icon (when chat widget is closed) -->
+<div
+  *ngIf="!isOpen"
+  class="chat-icon"
+  (click)="toggleChat()"
+  (mouseenter)="showFabButtons = true"
+  (mouseleave)="showFabButtons = false"
+>
+  <svg
+    width="50"
+    height="50"
+    viewBox="0 0 101 101"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="50.5" cy="50.5" r="50.5" fill="white" />
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M35.1257 35.0832V63.8321H63.7889V35.0832H35.1257ZM33.5205 20.7944C26.4919 20.7944 20.7941 26.4752 20.7941 33.4828V65.4325C20.7941 72.4401 26.4919 78.1209 33.5205 78.1209H65.394C72.4227 78.1209 78.1205 72.4401 78.1205 65.4325V33.4828C78.1205 26.4752 72.4227 20.7944 65.394 20.7944H33.5205Z"
+      fill="url(#paint0_linear_5279_14702)"
+    />
+    <path
+      d="M35.0381 20.801L35.3237 63.5836H78.1167C78.2754 74.2315 73.4993 77.7827 65.5804 78.0071H38.1621C26.0978 78.8982 20.2413 74.6188 20.8351 62.9846L20.8637 35.1474C20.6808 26.1381 25.1467 20.5766 35.0381 20.801Z"
+      fill="url(#paint1_linear_5279_14702)"
+    />
+    <defs>
+      <linearGradient
+        id="paint0_linear_5279_14702"
+        x1="71.6426"
+        y1="22.6002"
+        x2="26.8707"
+        y2="78.1209"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stop-color="#AD00FF" />
+        <stop offset="1" stop-color="#07014B" />
+      </linearGradient>
+      <linearGradient
+        id="paint1_linear_5279_14702"
+        x1="41.4241"
+        y1="64.8385"
+        x2="41.6807"
+        y2="89.9573"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stop-color="#171717" />
+        <stop offset="1" />
+      </linearGradient>
+    </defs>
+  </svg>
 
-  <!-- Chat Icon (when chat widget is closed) -->
-  <div *ngIf="!isOpen" class="chat-icon" (click)="toggleChat()" (mouseenter)="showFabButtons = true" (mouseleave)="showFabButtons = false">
-    <svg width="101" height="101" viewBox="0 0 101 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="50.5" cy="50.5" r="50.5" fill="white" />
-      <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
-        d="M35.1257 35.0832V63.8321H63.7889V35.0832H35.1257ZM33.5205 20.7944C26.4919 20.7944 20.7941 26.4752 20.7941 33.4828V65.4325C20.7941 72.4401 26.4919 78.1209 33.5205 78.1209H65.394C72.4227 78.1209 78.1205 72.4401 78.1205 65.4325V33.4828C78.1205 26.4752 72.4227 20.7944 65.394 20.7944H33.5205Z"
-        fill="url(#paint0_linear_5279_14702)"
-      />
-      <path
-        d="M35.0381 20.801L35.3237 63.5836H78.1167C78.2754 74.2315 73.4993 77.7827 65.5804 78.0071H38.1621C26.0978 78.8982 20.2413 74.6188 20.8351 62.9846L20.8637 35.1474C20.6808 26.1381 25.1467 20.5766 35.0381 20.801Z"
-        fill="url(#paint1_linear_5279_14702)"
-      />
-      <defs>
-        <linearGradient id="paint0_linear_5279_14702" x1="71.6426" y1="22.6002" x2="26.8707" y2="78.1209" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#AD00FF" />
-          <stop offset="1" stop-color="#07014B" />
-        </linearGradient>
-        <linearGradient id="paint1_linear_5279_14702" x1="41.4241" y1="64.8385" x2="41.6807" y2="89.9573" gradientUnits="userSpaceOnUse">
-          <stop stop-color="#171717" />
-          <stop offset="1" />
-        </linearGradient>
-      </defs>
-    </svg>
+  <!-- Floating Action Buttons (FABs) -->
+  <div class="fab-buttons" *ngIf="showFabButtons">
+    <button mat-mini-fab color="primary">
+      <mat-icon>edit</mat-icon>
+    </button>
+    <button mat-mini-fab color="warn">
+      <mat-icon>help</mat-icon>
+    </button>
+    <button mat-mini-fab color="accent">
+      <mat-icon>share</mat-icon>
+    </button>
+    <button mat-mini-fab color="warn">
+      <mat-icon>notifications</mat-icon>
+    </button>
+  </div>
+</div>
+<!-- Chat Widget (when isOpen is true) -->
+<div *ngIf="isOpen" class="chat-widget">
+  <!-- Header Section -->
+  <div class="header">
+    <div class="header-content d-flex justify-content-between">
+      <!-- Profile Picture -->
+      <svg
+        class="profile-pic"
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        fill="#f6efef"
+        viewBox="0 0 256 256"
+      >
+        <path
+          d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM79.57,196.57a60,60,0,0,1,96.86,0,83.72,83.72,0,0,1-96.86,0ZM100,120a28,28,0,1,1,28,28A28,28,0,0,1,100,120ZM194,179.94a83.48,83.48,0,0,0-29-23.42,52,52,0,1,0-74,0,83.48,83.48,0,0,0-29,23.42,84,84,0,1,1,131.9,0Z"
+        ></path>
+      </svg>
 
+      <!-- Chat Header Text -->
+      <div>
+        <h5 class="pt-2 text-center ms-4">Chat with Support</h5>
+      </div>
 
-    <!-- Floating Action Buttons (FABs) -->
-    <div class="fab-buttons" *ngIf="showFabButtons">
-      <button mat-mini-fab color="primary">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button mat-mini-fab color="warn">
-        <mat-icon>help</mat-icon>
-      </button>
-      <button mat-mini-fab color="accent">
-        <mat-icon>share</mat-icon>
-      </button>
-      <button mat-mini-fab color="warn">
-        <mat-icon>notifications</mat-icon>
-      </button>
+      <!-- Notification Bell Icon -->
+      <div class="notification-bell">
+        <button class="bell" (click)="toggleNotifications()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="28"
+            height="28"
+            fill="#f6f4f4"
+            viewBox="0 0 256 256"
+          >
+            <path
+              d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216Z"
+            ></path>
+          </svg>
+          <span *ngIf="unreadCount > 0" class="unread-count">{{
+            unreadCount
+          }}</span>
+          <span *ngIf="unreadAlertCount > 0" class="unread-count">{{
+            unreadAlertCount
+          }}</span>
+        </button>
+      </div>
+      <svg
+        class="close pb-4"
+        (click)="toggleChat()"
+        xmlns="http://www.w3.org/2000/svg"
+        width="68"
+        height="68"
+        fill="#f6efef"
+        viewBox="0 0 256 256"
+      >
+        <path
+          d="M168.49,104.49,145,128l23.52,23.51a12,12,0,0,1-17,17l-23.51-23.52-23.52,23.52a12,12,0,1,1-17-17L111,128,87.47,104.49a12,12,0,0,1,17-17L128,111l23.51-23.51A12,12,0,1,1,168.49,104.49Z"
+        ></path>
+      </svg>
+    </div>
+
+    <div>
+      <div class="notification-boxes">
+        <div class="notification-boxes">
+          <div
+            *ngFor="let notification of displayedNotifications; let i = index"
+            [ngClass]="{
+              received: notification.received,
+              'not-received': !notification.received
+            }"
+            class="notification-box"
+            (click)="showsopdetail(notification, sopDetailTemplate)"
+          >
+            Sop {{ i + 1 }}
+          </div>
+          <div
+            class="showmore"
+            *ngIf="!showAll"
+            (click)="toggleNotifications()"
+          >
+            {{
+              notificationData.sops.length - displayedNotifications.length
+            }}more...
+          </div>
+        </div>
+      </div>
+      <ng-template class="sopdetail" #sopDetailTemplate let-data>
+        <div class="sop-detail-container">
+          <h2>SOP Details</h2>
+          <p><strong>Title:</strong> {{ data.title }}</p>
+          <p><strong>Description:</strong> {{ data.description }}</p>
+          <p>
+            <strong>Status:</strong>
+            {{ data.received ? "Received" : "Not Received" }}
+          </p>
+          <button mat-button (click)="closeDialog()">Close</button>
+        </div>
+      </ng-template>
     </div>
   </div>
-
-  <!-- Chat Widget (when isOpen is true) -->
-  <div *ngIf="isOpen" class="chat-widget" cdkDrag cdkDragBoundary=".chat-widget-boundary">
-    <!-- Header Section -->
-    <div class="header">
-      <div class="header-content d-flex justify-content-between">
-        <!-- Profile Picture -->
-        <svg class="profile-pic" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#f6efef" viewBox="0 0 256 256">
-          <path d="M128,20A108,108,0,1,0,236,128,108.12,108.12,0,0,0,128,20ZM79.57,196.57a60,60,0,0,1,96.86,0,83.72,83.72,0,0,1-96.86,0ZM100,120a28,28,0,1,1,28,28A28,28,0,0,1,100,120ZM194,179.94a83.48,83.48,0,0,0-29-23.42,52,52,0,1,0-74,0,83.48,83.48,0,0,0-29,23.42,84,84,0,1,1,131.9,0Z"></path>
-        </svg>
-
-        <!-- Chat Header Text -->
-        <div>
-          <h5 class="pt-2 text-center ms-4">Chat with Support</h5>
-
-        </div>
-
-        <!-- Notification Bell Icon -->
-        <div class="notification-bell">
-          <button class="bell" (click)="toggleNotifications()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#f6f4f4" viewBox="0 0 256 256"><path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216Z"></path></svg>
-            <span *ngIf="unreadCount > 0" class="unread-count">{{ unreadCount }}</span>
-            <span *ngIf="unreadAlertCount > 0" class="unread-count">{{ unreadAlertCount }}</span>
-          </button>
-        </div>
-        <svg class="close pb-4" (click)="toggleChat()" xmlns="http://www.w3.org/2000/svg" width="68" height="68" fill="#f6efef" viewBox="0 0 256 256">
-          <path d="M168.49,104.49,145,128l23.52,23.51a12,12,0,0,1-17,17l-23.51-23.52-23.52,23.52a12,12,0,1,1-17-17L111,128,87.47,104.49a12,12,0,0,1,17-17L128,111l23.51-23.51A12,12,0,1,1,168.49,104.49Z"></path>
-        </svg>
-      </div>
-
-      <!-- <div>
-        <app-sops></app-sops>
-      </div> -->
-
-      <div>
-        <div class="notification-boxes">
-
-          <div class="notification-boxes">
-            <div
-              *ngFor="let notification of displayedNotifications; let i = index"
-              [ngClass]="{'received': notification.received, 'not-received': !notification.received}"
-              class="notification-box"
-              (click)="showsopdetail(notification, sopDetailTemplate)"
-            >
-              Sop {{ i + 1 }}
-            </div>
-            <div class="showmore" *ngIf="!showAll" (click)="toggleNotifications()">{{ notificationData.sops.length - displayedNotifications.length }}more... </div>
-          </div>
-
-        </div>
-        <ng-template class="sopdetail" #sopDetailTemplate let-data>
-          <div class="sop-detail-container">
-            <h2>SOP Details</h2>
-            <p><strong>Title:</strong> {{ data.title }}</p>
-            <p><strong>Description:</strong> {{ data.description }}</p>
-            <p><strong>Status:</strong> {{ data.received ? 'Received' : 'Not Received' }}</p>
-            <button mat-button (click)="closeDialog()">Close</button>
-          </div>
-        </ng-template>
-
-      </div>
-    </div>
-    <div class="shadow-sm bg-white text-dark">
-      <button class=" aibutton mb-0 ms-2 fs-5 " (click)="openAIModal()">AI</button>
-    </div>
-    <div class="message-container">
-
+  <div class="shadow-sm d-flex justify-content-center align-items-center bg-white text-dark">
+    <button class="aibutton mb-0 ms-2 fs-5" (click)="openAIModal()">AI</button>
+  </div>
+  <div class="message-container">
     <!-- Tabbed Content (Messages / Notifications) -->
-    <mat-tab-group animationDuration="1000ms" [(selectedIndex)]="selectedTabIndex" class="tab-group">
+    <mat-tab-group
+      animationDuration="1000ms"
+      [(selectedIndex)]="selectedTabIndex"
+      class="tab-group"
+    >
       <!-- Messages Tab -->
 
       <mat-tab label="Messages">
@@ -122,13 +184,23 @@ cdkDragHandle=".chat-icon">
             'full-width': selectedTabIndex === 0,
             'half-width': selectedTabIndex === 1
           }"
-          class="messages">
-          <div *ngFor="let message of messages" [ngClass]="{ 'my-message': message.sender === 'Me', 'other-message': message.sender !== 'Me' }" class="message-container">
+          class="messages"
+        >
+          <div
+            *ngFor="let message of messages"
+            [ngClass]="{
+              'my-message': message.sender === 'Me',
+              'other-message': message.sender !== 'Me'
+            }"
+            class="message-container"
+          >
             <div class="message-content">
-              <strong *ngIf="message.sender !== 'Me'" class="sender">{{ message.sender }}</strong>
+              <strong *ngIf="message.sender !== 'Me'" class="sender">{{
+                message.sender
+              }}</strong>
               <span class="content" [innerHTML]="message.content"></span>
               <div class="timestamp" *ngIf="message.timestamp">
-                <small>{{ message.timestamp | date: 'short' }}</small>
+                <small>{{ message.timestamp | date : "short" }}</small>
               </div>
             </div>
           </div>
@@ -136,117 +208,111 @@ cdkDragHandle=".chat-icon">
       </mat-tab>
 
       <!-- Notifications Tab -->
-      <mat-tab
-       class="notification" label="Notifications">
+      <mat-tab class="notification" label="Notifications">
         <div
           [ngClass]="{
             'full-width': selectedTabIndex === 1,
             'half-width': selectedTabIndex === 0
           }"
-          class="notification-list pt-2 me-0 ms-4" [ngStyle]="{ 'width': '327px' }"
+          class="notification-list pt-2 me-0 ms-4"
+          [ngStyle]="{ width: '327px' }"
+        >
+          <div
+            class="notification-content"
+            *ngFor="let notification of notificationData.alerts"
+            [ngClass]="{
+              read: notification.isRead,
+              unread: !notification.isRead
+            }"
+            (click)="markNotificationAsRead(notification)"
           >
-          <div class="notification-content" *ngFor="let notification of notificationData.alerts"
-               [ngClass]="{'read': notification.isRead, 'unread': !notification.isRead}"
-               (click)="markNotificationAsRead(notification)">
             <p class="px-2 pb-0 pt-2 mb-0">{{ notification.message }}</p>
-            <small class="px-2">{{ notification.timestamp | date: 'short' }}</small>
+            <small class="px-2">{{
+              notification.timestamp | date : "short"
+            }}</small>
             <span *ngIf="notification.isRead" class="green-tick">&#10004;</span>
           </div>
-
         </div>
       </mat-tab>
     </mat-tab-group>
-    <div >
-
+    <div>
       <hr />
-      <ng-container >
 
-        <div  class="TranscriptTab">
-        <p (click)="toggleTab()">
-          Transcript
-        </p>
+      <div class="TranscriptTab">
+        <p (click)="toggleTab()">Transcript</p>
         <!-- Content that will be shown/hidden -->
-        <div  class="Transcript" *ngIf="showTab">
+        <div class="Transcript" *ngIf="showTab">
           <p>Transcript section</p>
         </div>
       </div>
-      </ng-container>
     </div>
   </div>
 
-    <div class="footer">
-      <div class="input-container">
-        <input [(ngModel)]="messageInput" type="text" placeholder="Enter your message..." />
-        <button class="send-btn" (click)="sendMessage()">
-        <svg class=".send-icon" xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="#5224bd" viewBox="0 0 256 256"><path d="M240,127.89a16,16,0,0,1-8.18,14L63.9,237.9A16.15,16.15,0,0,1,56,240a16,16,0,0,1-15-21.33l27-79.95A4,4,0,0,1,71.72,136H144a8,8,0,0,0,8-8.53,8.19,8.19,0,0,0-8.26-7.47h-72a4,4,0,0,1-3.79-2.72l-27-79.94A16,16,0,0,1,63.84,18.07l168,95.89A16,16,0,0,1,240,127.89Z"></path></svg>
-      </button>
-      </div>
-
-
-      <!-- Toggle FAB Button -->
-      <!-- <button mat-fab (click)="toggleFab()" class="toggle-button">
-        <mat-icon>{{ showFabButtons ? 'close' : 'add' }}</mat-icon>
-      </button> -->
-
-      <!-- Send Message Button -->
-      <button  class="loader">
-        <div class="dotted-loader"></div>
-        <!-- <div class="spinner-box">
-          <div class="blue-orbit leo">
-          </div>
-
-          <div class="green-orbit leo">
-          </div>
-
-          <div class="red-orbit leo">
-          </div>
-
-          <div class="white-orbit w1 leo">
-          </div><div class="white-orbit w2 leo">
-          </div><div class="white-orbit w3 leo">
-          </div>
-        </div> -->
+  <div class="footer">
+    <div class="input-container">
+      <input
+        [(ngModel)]="messageInput"
+        type="text"
+        placeholder="Enter your message..."
+      />
+      <button class="send-btn" (click)="sendMessage()">
+        <svg
+          class=".send-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="42"
+          height="42"
+          fill="#5224bd"
+          viewBox="0 0 256 256"
+        >
+          <path
+            d="M240,127.89a16,16,0,0,1-8.18,14L63.9,237.9A16.15,16.15,0,0,1,56,240a16,16,0,0,1-15-21.33l27-79.95A4,4,0,0,1,71.72,136H144a8,8,0,0,0,8-8.53,8.19,8.19,0,0,0-8.26-7.47h-72a4,4,0,0,1-3.79-2.72l-27-79.94A16,16,0,0,1,63.84,18.07l168,95.89A16,16,0,0,1,240,127.89Z"
+          ></path>
+        </svg>
       </button>
     </div>
+    <!-- Send Message Button -->
+    <button class="loader">
+      <div class="dotted-loader"></div>
+    </button>
   </div>
 </div>
-</div>
-<!-- <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel" aria-hidden="true" [ngClass]="{'show': isModalOpen}" [style.display]="isModalOpen ? 'block' : 'none'">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="contactModalLabel">Transcript</h5> -->
-        <!-- <button type="button" class="close" (click)="closeTranscriptModal()" aria-label="Close">
-        </button> -->
-      <!-- </div>
-      <div class="modal-body">
-         <p>dfghujikoijhghf</p> -->
-          <!-- Modal Footer -->
-          <!-- <div class="modal-footer">
-            <button type="button" (click)="closeTranscriptModal()" class="btn btn-secondary">Cancel</button>
-            <button type="submit" class="btn btn-primary" >Submit</button>
-          </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<div class="modal fade" id="AIModal" tabindex="-1" role="dialog" aria-labelledby="aiModalLabel" aria-hidden="true" [ngClass]="{'show': isAIModalOpen}" [style.display]="isAIModalOpen ? 'block' : 'none'">
+<div
+  class="modal fade"
+  id="AIModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="aiModalLabel"
+  aria-hidden="true"
+  [ngClass]="{ show: isAIModalOpen }"
+  [style.display]="isAIModalOpen ? 'block' : 'none'"
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="contactModalLabel">AI</h5>
-        <!-- <button type="button" class="close" (click)="closeAIModal()" aria-label="Close">
-       X </button> -->
       </div>
       <div class="modal-body">
-         <p>dfghujikoijhghf</p>
-          <!-- Modal Footer -->
-          <div class="modal-footer">
-            <button type="button" (click)="closeAIModal()" class="btn btn-secondary">Cancel</button>
-            <button type="submit" class="btn btn-primary" >Submit</button>
-          </div>
+        <p>dfghujikoijhghf</p>
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button
+            type="button"
+            (click)="closeAIModal()"
+            class="btn btn-secondary"
+          >
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
+<!-- <div
+  *ngIf="!isOpen"
+  class="chat-icon"
+  (click)="toggleChat()"
+  [style.cursor]="isDragging ? 'grabbing' : 'grab'"
+>
+  <div class="icon"></div>
+</div> -->

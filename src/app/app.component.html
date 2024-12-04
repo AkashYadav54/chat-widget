@@ -1,2 +1,90 @@
-<app-chat-widget></app-chat-widget>
-<router-outlet></router-outlet>
+<div class="container">
+  <header>
+    <nav class="navbar">
+      <a class="nav-link" routerLink="/" routerLinkActive="active">Home</a>
+      <a class="nav-link" routerLink="/about" routerLinkActive="active">About</a>
+      <a class="nav-link" routerLink="/services" routerLinkActive="active">Services</a>
+      <a class="nav-link" routerLink="/projects" routerLinkActive="active">Projects</a>
+      <a class="nav-link" routerLink="/team" routerLinkActive="active">Team</a>
+      <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- The router-outlet is where routed components will be displayed -->
+    <app-chat-widget></app-chat-widget>
+    <app-sops></app-sops>
+
+    <section id="home">
+      <h1>Welcome to Our Application</h1>
+      <p>This is a fully interactive web application designed to showcase our services, projects, and team.</p>
+      <p>We provide high-quality solutions tailored to meet your needs. Explore our site to learn more.</p>
+    </section>
+
+    <section id="about">
+      <h1>About Us</h1>
+      <p>We are a team of experienced developers and designers committed to creating cutting-edge applications.</p>
+      <p>Our goal is to provide top-notch services that help businesses grow and succeed in the digital age.</p>
+    </section>
+
+    <section id="services">
+      <h1>Our Services</h1>
+      <div class="service-list">
+        <div class="service-item">
+          <h2>Web Development</h2>
+          <p>Custom web development using the latest technologies to create responsive, user-friendly websites.</p>
+        </div>
+        <div class="service-item">
+          <h2>Mobile App Development</h2>
+          <p>Developing mobile applications for both iOS and Android with a focus on performance and usability.</p>
+        </div>
+        <div class="service-item">
+          <h2>UI/UX Design</h2>
+          <p>Designing engaging and user-friendly interfaces that improve the overall user experience of your applications.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h1>Our Projects</h1>
+      <div class="project-list">
+        <div class="project-item">
+          <h2>Project A</h2>
+          <p>A web-based application designed to streamline business operations.</p>
+        </div>
+        <div class="project-item">
+          <h2>Project B</h2>
+          <p>An innovative mobile app for customer engagement and service delivery.</p>
+        </div>
+        <div class="project-item">
+          <h2>Project C</h2>
+          <p>A comprehensive software solution for inventory management.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="team">
+      <h1>Meet Our Team</h1>
+      <div class="team-list">
+        <div class="team-member">
+          <h2>John Doe</h2>
+          <p>Lead Developer</p>
+        </div>
+        <div class="team-member">
+          <h2>Jane Smith</h2>
+          <p>UI/UX Designer</p>
+        </div>
+        <div class="team-member">
+          <h2>Samuel Lee</h2>
+          <p>Project Manager</p>
+        </div>
+      </div>
+    </section>
+
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer>
+    <p>© 2024 Your Angular Application. All Rights Reserved.</p>
+  </footer>
+</div>

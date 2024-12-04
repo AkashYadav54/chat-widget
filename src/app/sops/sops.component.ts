@@ -1,4 +1,4 @@
-import { Component, Inject, Input,EventEmitter,Output  } from '@angular/core';
+import { Component, Inject, Input,EventEmitter,Output, HostListener, ElementRef  } from '@angular/core';
 import { WebsocketService } from '../websocket.service';
 import { Subscription } from 'rxjs';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -50,4 +50,37 @@ export class SopsComponent {
   //   sop.received = true;
   // }
   // constructor(public modalRef: MdbModalRef<ModalComponent>) {}
+
+  // private isDragging = false;
+  // private offsetX = 0;
+  // private offsetY = 0;
+
+  // constructor(private elementRef: ElementRef) {}
+
+  // @HostListener('mousedown', ['$event'])
+  // onMouseDown(event: MouseEvent): void {
+  //   this.isDragging = true;
+  //   const element = this.elementRef.nativeElement.querySelector('.overlap-content');
+  //   const rect = element.getBoundingClientRect();
+  //   this.offsetX = event.clientX - rect.left;
+  //   this.offsetY = event.clientY - rect.top;
+  //   element.style.cursor = 'grabbing';
+  // }
+
+  // @HostListener('document:mousemove', ['$event'])
+  // onMouseMove(event: MouseEvent): void {
+  //   if (this.isDragging) {
+  //     const element = this.elementRef.nativeElement.querySelector('.overlap-content');
+  //     element.style.left = `${event.clientX - this.offsetX}px`;
+  //     element.style.top = `${event.clientY - this.offsetY}px`;
+  //   }
+  // }
+
+  // @HostListener('document:mouseup')
+  // onMouseUp(): void {
+  //   this.isDragging = false;
+  //   const element = this.elementRef.nativeElement.querySelector('.overlap-content');
+  //   element.style.cursor = 'grab';
+  // }
+
 }
